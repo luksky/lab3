@@ -1,0 +1,29 @@
+<div class="col-12 row">
+<div class="row justify-content-center">
+  <div class="col-4">
+    <h2>Server resp</h2>
+    <div *ngIf="result">
+      <button [ngClass]="'result.status == 200' ? 'btn btn-success' : ('result.status == 401 || result.status == 403'? 'btn btn-warning' : 'btn btn-danger')" (click)="responseHover()">{{result.status}}</button>
+    </div>
+    <pre *ngIf="showResponse">{{result|json}}</pre>
+  </div>
+  <div class="col-4">
+    <h2>Formatka może być użyta przez każdego usera</h2>
+    <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+      <div class="form-group">
+        <div class="input-group">
+          <input id="value" type="text" class="form-control" name="value" [(ngModel)]="data.value" required #value="ngModel">
+        </div>
+      </div>
+      <button *ngIf="auth.isAuthenticated()" class="btn btn-outline-warning">Send</button>
+      <button *ngIf="!auth.isAuthenticated()" class="btn btn-outline-warning" disabled>Send</button>
+    </form>
+  </div>
+  <div class="col-4">
+    <h2>Przycisk usuń może być użyty tylko przez Admina</h2>
+    <button *ngIf="auth.isInRole('admin')" class="btn btn-outline-secondary" (click)="delete()"          >Can be removed</button>
+    <button *ngIf="!auth.isInRole('admin')" class="btn btn-outline-secondary" (click)="delete()" disabled>Can not be removed</button>
+  </div>
+</div>
+
+</div>
